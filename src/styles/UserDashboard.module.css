@@ -1,0 +1,61 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap');
+*, *::before, *::after { box-sizing: border-box; }
+
+:root {
+  --sidebar-w: 260px;
+}
+
+/* ── Root layout ────────────────────────────────────────── */
+.layout {
+  display: flex;
+  min-height: 100vh;
+  background: #f7f7f5;
+  font-family: 'DM Sans', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Main area (offset by sidebar width on desktop) ─────── */
+.main {
+  flex: 1;
+  min-width: 0;
+  margin-left: var(--sidebar-w);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* On mobile, sidebar is a drawer — main takes full width */
+@media (max-width: 768px) {
+  .main {
+    margin-left: 0;
+  }
+}
+
+/* ── Scrollable content area ────────────────────────────── */
+.content {
+  flex: 1;
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  overflow-y: auto;
+}
+
+@media (max-width: 600px) {
+  .content { padding: 16px; gap: 16px; }
+}
+
+/* ── Two-column grid: tasks + activity ──────────────────── */
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 20px;
+  align-items: start;
+}
+
+@media (max-width: 1100px) {
+  .grid { grid-template-columns: 1fr; }
+}
+
+.tasksCol { min-width: 0; }
+.activityCol { min-width: 0; }

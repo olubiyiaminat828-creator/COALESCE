@@ -1,0 +1,25 @@
+.pageWrapper {
+  position: relative;
+  min-height: 100vh;
+  /* Use dynmic viewport height to prevent address bar glitches on mobile */
+  min-height: 100dvh; 
+  background-color: #ffffff;
+  
+  /* --- CRITICAL FLOW FIXES --- */
+  overflow-x: hidden; /* Stops horizontal right-swiping dead in its tracks */
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Adjust the decorative blur blob so it can't stretch the browser horizontally */
+.pageWrapper::before {
+  content: "";
+  position: absolute;
+  top: -5%;
+  right: -10%;
+  height: min(70vw, 600px);
+  filter: blur(80px); 
+  z-index: 0;
+  pointer-events: none;
+}

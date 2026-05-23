@@ -1,0 +1,354 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; }
+
+:root {
+  --sidebar-bg:        #0f0e1a;
+  --sidebar-surface:   #1a1928;
+  --sidebar-border:    #2a2940;
+  --sidebar-hover:     rgba(255,255,255,0.05);
+  --sidebar-active-bg: rgba(99,102,241,0.18);
+  --sidebar-active:    #818cf8;
+  --sidebar-text:      rgba(255,255,255,0.55);
+  --sidebar-text-hi:   rgba(255,255,255,0.88);
+  --color-primary:     #4f46e5;
+  --font-display: 'DM Serif Display', Georgia, serif;
+  --font-body:    'DM Sans', system-ui, sans-serif;
+  --transition:   200ms cubic-bezier(.4,0,.2,1);
+  --sidebar-w:    260px;
+}
+
+/* ── Overlay (mobile) ───────────────────────────────────── */
+.overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+  z-index: 40;
+  backdrop-filter: blur(2px);
+  animation: fadeIn 200ms ease;
+}
+
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+@media (max-width: 768px) {
+  .overlay { display: block; }
+}
+
+/* ── Sidebar shell ──────────────────────────────────────── */
+.sidebar {
+  width: var(--sidebar-w);
+  height: 100vh;
+  background: var(--sidebar-bg);
+  border-right: 1px solid var(--sidebar-border);
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 50;
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: none;
+  transition: transform var(--transition);
+}
+
+.sidebar::-webkit-scrollbar { display: none; }
+
+/* Mobile — hidden off-screen by default */
+@media (max-width: 768px) {
+  .sidebar {
+    transform: translateX(-100%);
+    box-shadow: 4px 0 32px rgba(0,0,0,0.4);
+  }
+
+  .sidebarOpen {
+    transform: translateX(0);
+  }
+}
+
+/* ── Logo ───────────────────────────────────────────────── */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 22px 20px 18px;
+  border-bottom: 1px solid var(--sidebar-border);
+  flex-shrink: 0;
+}
+
+.logoMark {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: var(--color-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.logoText {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  color: #fff;
+  letter-spacing: -.02em;
+  flex: 1;
+}
+
+.closeBtn {
+  display: none;
+  background: none;
+  border: none;
+  color: var(--sidebar-text);
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 6px;
+  transition: color var(--transition), background var(--transition);
+}
+
+.closeBtn:hover {
+  color: var(--sidebar-text-hi);
+  background: var(--sidebar-hover);
+}
+
+@media (max-width: 768px) {
+  .closeBtn { display: flex; }
+}
+
+/* ── User pill ──────────────────────────────────────────── */
+.userPill {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--sidebar-border);
+  flex-shrink: 0;
+}
+
+.userAvatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #6366f1, #4f46e5);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.userInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  flex: 1;
+  min-width: 0;
+}
+
+.userName {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--sidebar-text-hi);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.userRole {
+  font-size: 11px;
+  color: var(--sidebar-text);
+  font-weight: 400;
+}
+
+.userStatus {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #4ade80;
+  box-shadow: 0 0 0 2px var(--sidebar-bg);
+  flex-shrink: 0;
+}
+
+/* ── Nav ────────────────────────────────────────────────── */
+.nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding: 12px 12px 0;
+  flex: 1;
+}
+
+.navGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  margin-bottom: 16px;
+}
+
+.navGroupLabel {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--sidebar-text);
+  padding: 0 8px 6px;
+  opacity: 0.5;
+}
+
+.navItem {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 10px;
+  border-radius: 9px;
+  border: none;
+  background: transparent;
+  color: var(--sidebar-text);
+  font-family: var(--font-body);
+  font-size: 13.5px;
+  font-weight: 400;
+  cursor: pointer;
+  text-align: left;
+  transition: background var(--transition), color var(--transition);
+  touch-action: manipulation;
+}
+
+.navItem:hover {
+  background: var(--sidebar-hover);
+  color: var(--sidebar-text-hi);
+}
+
+.navItemActive {
+  background: var(--sidebar-active-bg);
+  color: var(--sidebar-active);
+  font-weight: 500;
+}
+
+.navItemActive:hover {
+  background: var(--sidebar-active-bg);
+  color: var(--sidebar-active);
+}
+
+.navIcon {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  opacity: 0.8;
+}
+
+.navItemActive .navIcon { opacity: 1; }
+
+.navLabel { flex: 1; }
+
+.navBadge {
+  font-size: 10.5px;
+  font-weight: 600;
+  background: rgba(99,102,241,0.25);
+  color: var(--sidebar-active);
+  padding: 1px 7px;
+  border-radius: 100px;
+  min-width: 20px;
+  text-align: center;
+}
+
+/* ── Projects ───────────────────────────────────────────── */
+.projects {
+  padding: 12px 20px 16px;
+  border-top: 1px solid var(--sidebar-border);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.projectsLabel {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--sidebar-text);
+  opacity: 0.5;
+  margin-bottom: 4px;
+}
+
+.projectItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 5px 6px;
+  border-radius: 7px;
+  cursor: pointer;
+  transition: background var(--transition);
+}
+
+.projectItem:hover { background: var(--sidebar-hover); }
+
+.projectDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.projectName {
+  font-size: 13px;
+  color: var(--sidebar-text);
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: color var(--transition);
+}
+
+.projectItem:hover .projectName { color: var(--sidebar-text-hi); }
+
+.projectPct {
+  font-size: 11px;
+  color: var(--sidebar-text);
+  opacity: 0.5;
+}
+
+/* ── Upgrade CTA ────────────────────────────────────────── */
+.upgrade {
+  margin: 0 12px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: linear-gradient(135deg, rgba(99,102,241,0.15), rgba(79,70,229,0.08));
+  border: 1px solid rgba(99,102,241,0.25);
+  border-radius: 12px;
+  padding: 14px 14px;
+  cursor: pointer;
+  transition: border-color var(--transition), background var(--transition);
+  flex-shrink: 0;
+}
+
+.upgrade:hover {
+  border-color: rgba(99,102,241,0.5);
+  background: linear-gradient(135deg, rgba(99,102,241,0.2), rgba(79,70,229,0.12));
+}
+
+.upgradeIcon {
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.upgradeTitle {
+  font-size: 13px;
+  font-weight: 600;
+  color: #a5b4fc;
+}
+
+.upgradeSub {
+  font-size: 11.5px;
+  color: var(--sidebar-text);
+  font-weight: 300;
+  margin-top: 1px;
+}
